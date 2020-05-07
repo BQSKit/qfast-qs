@@ -51,6 +51,6 @@ def synthesize ( utry ):
 
     compiler = sc.SearchCompiler( solver=sc.solver.LeastSquares_Jac_SolverNative() )
     output = compiler.compile( utry )
-    output = sc.assembler.assemble( output[1], output[2], sc.assembler.ASSEMBLY_IBMOPENQASM )
+    output = sc.assembler.assemble( output[0], output[1], sc.assembler.ASSEMBLY_IBMOPENQASM )
     return output
 
