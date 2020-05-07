@@ -10,7 +10,7 @@ The best way to install this python package is with pip.
 pip install qfast-sc
 ```
 
-##Copyright
+## Copyright
 
 Quantum Fast Approximate Synthesis Tool (QFAST) Copyright (c) 2020,
 The Regents of the University of California, through Lawrence Berkeley
