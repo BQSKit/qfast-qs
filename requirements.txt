@@ -1,2 +1,2 @@
-qfast>=1.0.0
-search_compiler>=1.2.0
+qfast>=2.0.0
+qsearch>=2.0.0a1

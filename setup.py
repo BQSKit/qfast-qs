@@ -17,16 +17,16 @@ with open( req_path ) as f:
     if '' in requirements:
         requirements.remove( '' )
 
-setup( name = "qfast-sc",
-       version = "1.0.1",
-       description = "QFAST SearchCompiler Plugin",
+setup( name = "qfast-qs",
+       version = "2.0.0",
+       description = "QFAST QSearch Plugin",
        long_description = long_description,
        long_description_content_type = "text/markdown",
-       url = "https://github.com/edyounis/qfast-sc",
+       url = "https://github.com/BQSKit/qfast-qs",
        author = "Ed Younis",
-       author_email = "edyounis@berkeley.edu",
+       author_email = "edyounis@lbl.gov",
        classifiers = [
-           "Development Status :: 2 - Pre-Alpha",
+           "Development Status :: 5 - Production/Stable",
            "Environment :: Console",
            "Intended Audience :: Developers",
            "Intended Audience :: Science/Research",
@@ -43,10 +43,10 @@ setup( name = "qfast-sc",
        ],
        keywords = "quantum synthesis compilation",
        project_urls = {
-           "Bug Tracker": "https://github.com/edyounis/qfast-sc/issues",
-           "Source Code": "https://github.com/edyounis/qfast-sc"
+           "Bug Tracker": "https://github.com/BQSKit/qfast-qs/issues",
+           "Source Code": "https://github.com/BQSKit/qfast-qs"
        },
-       packages = [ "qfast.native" ],
+       packages = [ "qfast.instantiation.native" ],
        install_requires = requirements,
        python_requires = ">=3.5, <4",
        zip_safe = False
