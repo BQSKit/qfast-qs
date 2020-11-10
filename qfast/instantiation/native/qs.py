@@ -4,8 +4,7 @@ as a native tool plugin to QFAST.
 """
 
 import qsearch
-import qsearch
-from qsearch import unitaries, advanced_unitaries, leap_compiler, multistart_solvers, parallelizers, reoptimizing_compiler
+from qsearch import options, assemblers, leap_compiler, post_processing
 
 from qfast import utils
 from qfast.instantiation import nativetool
@@ -25,7 +24,7 @@ class QSearchTool ( nativetool.NativeTool ):
 
         # Larger unitaries can be decomposed with this tool,
         # however, solution quality is best at 3 qubits.
-        return 3
+        return 4
 
     def synthesize ( self, utry ):
         """
@@ -48,16 +47,19 @@ class QSearchTool ( nativetool.NativeTool ):
 
         if utry.shape[0] > 2 ** self.get_maximum_size():
             raise ValueError( "utry has incorrect dimensions." )
-
-        solver = qsearch.solvers.LeastSquares_Jac_SolverNative()
-        assembler_style = qsearch.assembler.ASSEMBLY_IBMOPENQASM
-        options = qsearch.options.Options()
-        options.target = utry
-        options.verbosity = 0
-        compiler = qsearch.leap_compiler.LeapCompiler( solver = solver )
-        output = compiler.compile( options )
-        output = qsearch.assembler.assemble( output["structure"],
-                                             output["vector"],
-                                             assembler_style )
+        
+        # Pass options into qsearch, being maximally quiet, and set the target to utry
+        opts = options.Options( )
+        opts.target = utry
+        opts.verbosity = 0
+        opts.write_to_stdout = False
+        opts.reoptimize_size = 7
+        # use the LEAP compiler, which scales better than normal qsearch
+        compiler = leap_compiler.LeapCompiler( )
+        output = compiler.compile( opts )
+        # LEAP requires some post-processing
+        post_processor = post_processing.LEAPReoptimizing_PostProcessor( )
+        output = post_processor.post_process_circuit( output, opts )
+        output = assemblers.ASSEMBLER_IBMOPENQASM.assemble( output )
         return output
 
