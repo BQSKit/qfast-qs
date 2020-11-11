@@ -4,7 +4,7 @@ as a native tool plugin to QFAST.
 """
 
 import qsearch
-from qsearch import options, assemblers, leap_compiler, post_processing
+from qsearch import options, assemblers, leap_compiler, post_processing, multistart_solvers
 
 from qfast import utils
 from qfast.instantiation import nativetool
@@ -24,7 +24,7 @@ class QSearchTool ( nativetool.NativeTool ):
 
         # Larger unitaries can be decomposed with this tool,
         # however, solution quality is best at 3 qubits.
-        return 4
+        return 3
 
     def synthesize ( self, utry ):
         """
@@ -54,6 +54,7 @@ class QSearchTool ( nativetool.NativeTool ):
         opts.verbosity = 0
         opts.write_to_stdout = False
         opts.reoptimize_size = 7
+        opts.solver = multistart_solvers.Multi
         # use the LEAP compiler, which scales better than normal qsearch
         compiler = leap_compiler.LeapCompiler( )
         output = compiler.compile( opts )
