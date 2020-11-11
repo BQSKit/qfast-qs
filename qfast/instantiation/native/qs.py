@@ -49,17 +49,17 @@ class QSearchTool ( nativetool.NativeTool ):
             raise ValueError( "utry has incorrect dimensions." )
         
         # Pass options into qsearch, being maximally quiet, and set the target to utry
-        opts = options.Options( )
+        opts = options.Options()
         opts.target = utry
         opts.verbosity = 0
         opts.write_to_stdout = False
         opts.reoptimize_size = 7
-        opts.solver = multistart_solvers.Multi
+        opts.solver = multistart_solvers.MultiStart_Solver( 24 )
         # use the LEAP compiler, which scales better than normal qsearch
-        compiler = leap_compiler.LeapCompiler( )
+        compiler = leap_compiler.LeapCompiler()
         output = compiler.compile( opts )
         # LEAP requires some post-processing
-        post_processor = post_processing.LEAPReoptimizing_PostProcessor( )
+        post_processor = post_processing.LEAPReoptimizing_PostProcessor()
         output = post_processor.post_process_circuit( output, opts )
         output = assemblers.ASSEMBLER_IBMOPENQASM.assemble( output )
         return output
